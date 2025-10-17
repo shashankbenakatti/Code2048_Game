@@ -13,9 +13,10 @@ A fully functional implementation of the popular 2048 game with a beautiful GUI,
 - **Responsive Design**: Automatically adjusts to different board sizes
 - **Win/Lose Detection**: Automatic game state management
 
+[See the implementation details here](Implementation.md)
 ## Requirements
 
-- Python 3.7 or higher
+- Python 3.2 or higher
 - tkinter (usually comes with Python)
 
 ##  Installation
