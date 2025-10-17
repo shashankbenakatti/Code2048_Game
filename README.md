@@ -13,6 +13,9 @@ A fully functional implementation of the popular 2048 game with a beautiful GUI,
 - **Responsive Design**: Automatically adjusts to different board sizes
 - **Win/Lose Detection**: Automatic game state management
 
+### Downloads 
+[](https://github.com/shashankbenakatti/Code2048_Game/releases/tag/latest)
+
 [See the implementation details here](Implementation.md)
 ## Requirements
 
