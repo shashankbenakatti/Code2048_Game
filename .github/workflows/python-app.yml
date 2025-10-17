@@ -1,13 +1,17 @@
-name: Build Windows EXE
+name: Build and Release Game
 
 on:
   push:
     branches: [main]
-  workflow_dispatch:   
+  workflow_dispatch:   # allows manual triggering
+
+permissions:
+  contents: write       # required for creating releases and uploading assets
 
 jobs:
   build:
     runs-on: windows-latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -15,19 +19,30 @@ jobs:
       - name: Setup Latest Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'   
+          python-version: '3.x'
 
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pyinstaller pygame
 
-      - name: Build Executable
+      - name: Build Windows Executable
         run: |
-          pyinstaller --onefile gammefile.py
+          pyinstaller --onefile gamefile.py
 
-      - name: Upload Built EXE
-        uses: actions/upload-artifact@v4
+      - name: Prepare Release Files
+        run: |
+          mkdir release_assets
+          copy dist\gamefile.exe release_assets\
+          # Also include your existing Linux binary if it's in dist/
+          if exist dist\gamefile (copy dist\gamefile release_assets\)
+          if exist dist\gamefile-linux (copy dist\gamefile-linux release_assets\)
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: Windows-Game
-          path: dist/gamefile.exe
+          tag_name: latest
+          name: "Latest Release"
+          files: release_assets/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
