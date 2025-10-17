@@ -3,7 +3,7 @@ name: Build Windows EXE
 on:
   push:
     branches: [main]
-  workflow_dispatch:   # 👈 Allows manual triggering from GitHub UI
+  workflow_dispatch:   
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
       - name: Setup Latest Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'   # 👈 Always uses the latest stable Python 3 version
+          python-version: '3.x'   
 
       - name: Install Dependencies
         run: |
