@@ -28,7 +28,7 @@ jobs:
 
       - name: Build Windows Executable
         run: |
-          pyinstaller --onefile gamefile.py
+          pyinstaller --onefile gammefile.py
 
       - name: Prepare Release Files
         run: |
