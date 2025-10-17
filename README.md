@@ -14,7 +14,7 @@ A fully functional implementation of the popular 2048 game with a beautiful GUI,
 - **Win/Lose Detection**: Automatic game state management
 
 ### Downloads 
-[](https://github.com/shashankbenakatti/Code2048_Game/releases/tag/latest)
+[Download Releases](https://github.com/shashankbenakatti/Code2048_Game/releases/tag/latest)
 
 [See the implementation details here](Implementation.md)
 ## Requirements
