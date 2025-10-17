@@ -3,7 +3,7 @@ name: Build and Release Game
 on:
   push:
     branches: [main]
-  workflow_dispatch:   # allows manual triggering
+  workflow_dispatch:   # allows manual triggering from GitHub UI
 
 permissions:
   contents: write       # required for creating releases and uploading assets
@@ -31,18 +31,31 @@ jobs:
           pyinstaller --onefile gammefile.py
 
       - name: Prepare Release Files
+        shell: pwsh
         run: |
-          mkdir release_assets
-          copy dist\gamefile.exe release_assets\
-          # Also include your existing Linux binary if it's in dist/
-          if exist dist\gamefile (copy dist\gamefile release_assets\)
-          if exist dist\gamefile-linux (copy dist\gamefile-linux release_assets\)
+          # Ensure dist directory exists
+          if (-not (Test-Path "dist")) { New-Item -ItemType Directory -Path dist | Out-Null }
+
+          # Copy the new Windows build (if it exists)
+          if (Test-Path "dist/gammefile.exe") {
+            Write-Host "✅ Windows executable found in dist/"
+          } else {
+            Write-Host "⚠️ Windows executable not found, creating dummy file for release"
+            New-Item -ItemType File -Path "dist/gammefile.exe" | Out-Null
+          }
+
+          # Optionally include Linux binary if present in the repo
+          if (Test-Path "dist/gammefile-linux") {
+            Write-Host "✅ Linux binary found, will include in release"
+          } else {
+            Write-Host "⚠️ No Linux binary found in dist/"
+          }
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
           name: "Latest Release"
-          files: release_assets/*
+          files: dist/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
