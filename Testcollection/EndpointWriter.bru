@@ -1,0 +1,20 @@
+meta {
+  name: EndpointWriter
+  type: http
+  seq: 1
+}
+
+post {
+  url: localhost:5000/event
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {"parameter": "speed:45km/h
+   
+}
+
+settings {
+  encodeUrl: true
+}
