@@ -24,7 +24,7 @@ jobs:
 
       - name: Build Executable
         run: |
-          pyinstaller --onefile gamefile.py
+          pyinstaller --onefile gammefile.py
 
       - name: Upload Built EXE
         uses: actions/upload-artifact@v4
